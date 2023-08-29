@@ -5,11 +5,12 @@ package lxd
 
 import (
 	"fmt"
+	"os"
 )
 
 type Artifact struct {
 	id string
-
+	f   string
 	// StateData should store data such as GeneratedData
 	// to be shared with post-processors
 	StateData map[string]interface{}
@@ -20,7 +21,7 @@ func (*Artifact) BuilderId() string {
 }
 
 func (a *Artifact) Files() []string {
-	return nil
+	return []string{ a.f }
 }
 
 func (a *Artifact) Id() string {
@@ -28,7 +29,7 @@ func (a *Artifact) Id() string {
 }
 
 func (a *Artifact) String() string {
-	return fmt.Sprintf("image: %s", a.id)
+	return fmt.Sprintf("image: %s in file %s", a.id, a.f)
 }
 
 func (a *Artifact) State(name string) interface{} {
@@ -36,6 +37,5 @@ func (a *Artifact) State(name string) interface{} {
 }
 
 func (a *Artifact) Destroy() error {
-	_, err := LXDCommand("image", "delete", a.id)
-	return err
+	return os.RemoveAll(a.f)
 }

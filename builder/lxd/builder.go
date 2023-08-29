@@ -5,6 +5,7 @@ package lxd
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/hashicorp/hcl/v2/hcldec"
 	"github.com/hashicorp/packer-plugin-sdk/multistep"
@@ -46,6 +47,7 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 		&stepLxdLaunch{},
 		&StepProvision{},
 		&stepPublish{},
+		&stepExport{},
 	}
 
 	// Setup the state bag
@@ -71,6 +73,7 @@ func (b *Builder) Run(ctx context.Context, ui packersdk.Ui, hook packersdk.Hook)
 
 	artifact := &Artifact{
 		id:        id,
+		f: 	       fmt.Sprintf("%s.tar.gz", b.config.OutputImage),
 		StateData: map[string]interface{}{"generated_data": state.Get("generated_data")},
 	}
 

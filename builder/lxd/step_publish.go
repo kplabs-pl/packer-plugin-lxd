@@ -46,7 +46,7 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 	}
 
 	publish_args := []string{
-		"publish", name, remote, "--alias", config.OutputImage,
+		"publish", name, remote,
 	}
 
 	for k, v := range config.PublishProperties {
