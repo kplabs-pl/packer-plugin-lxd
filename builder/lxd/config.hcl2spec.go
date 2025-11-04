@@ -29,6 +29,7 @@ type FlatConfig struct {
 	LaunchConfig        map[string]string `mapstructure:"launch_config" required:"false" cty:"launch_config" hcl:"launch_config"`
 	VirtualMachine      *bool             `mapstructure:"virtual_machine" cty:"virtual_machine" hcl:"virtual_machine"`
 	SkipPublish         *bool             `mapstructure:"skip_publish" required:"false" cty:"skip_publish" hcl:"skip_publish"`
+	PublishCompression  *string           `mapstructure:"publish_compression" required:"false" cty:"publish_compression" hcl:"publish_compression"`
 }
 
 // FlatMapstructure returns a new FlatConfig.
@@ -62,6 +63,7 @@ func (*FlatConfig) HCL2Spec() map[string]hcldec.Spec {
 		"launch_config":              &hcldec.AttrSpec{Name: "launch_config", Type: cty.Map(cty.String), Required: false},
 		"virtual_machine":            &hcldec.AttrSpec{Name: "virtual_machine", Type: cty.Bool, Required: false},
 		"skip_publish":               &hcldec.AttrSpec{Name: "skip_publish", Type: cty.Bool, Required: false},
+		"publish_compression":        &hcldec.AttrSpec{Name: "publish_compression", Type: cty.String, Required: false},
 	}
 	return s
 }
