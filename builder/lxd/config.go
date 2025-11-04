@@ -51,6 +51,8 @@ type Config struct {
 	// Skip execute `lxc publish`; defaults to false
 	SkipPublish bool `mapstructure:"skip_publish" required:"false"`
 
+	PublishCompression *string `mapstructure:"publish_compression" required:"false"`
+
 	ctx interpolate.Context
 }
 

@@ -53,6 +53,10 @@ func (s *stepPublish) Run(ctx context.Context, state multistep.StateBag) multist
 		publish_args = append(publish_args, fmt.Sprintf("%s=%s", k, v))
 	}
 
+	if config.PublishCompression != nil {
+		publish_args = append(publish_args, "--compression", *config.PublishCompression)
+	}
+
 	ui.Say("Publishing container...")
 	stdoutString, err := LXDCommand(publish_args...)
 	if err != nil {
